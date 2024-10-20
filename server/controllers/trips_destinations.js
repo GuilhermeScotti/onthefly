@@ -26,6 +26,19 @@ const getAllTrips = async (req, res) => {
       [destination_id],
     );
 
+    if (results.rows.length === 0) {
+      return []; // Return an empty array if no destinations were found
+    }
+
+    const tripIds = results.rows.map((row) => row.trip_id);
+
+    const trips = await pool.query(
+      `SELECT * FROM trips WHERE id = ANY($1::int[])`,
+      [tripIds],
+    );
+
+    return res.status(200).json(trips.rows);
+
     res.status(200).json(results.rows); // Return all trips for the specific destination
   } catch (error) {
     res.status(409).json({ error: error.message });

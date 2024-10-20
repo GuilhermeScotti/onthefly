@@ -36,7 +36,7 @@ const App = () => {
   let element = useRoutes([
     {
       path: "/",
-      element: <ReadTrips data={trips} />,
+      element: <ReadTrips data={trips} destinations={destinations} />,
     },
     {
       path: "/trip/new",
