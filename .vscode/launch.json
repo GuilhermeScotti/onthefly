@@ -16,7 +16,7 @@
       "request": "launch",
       "name": "Attach to Chrome",
       "url": "http://localhost:5173/",
-      "webRoot": "${workspaceFolder}/react-client",
+      "webRoot": "${workspaceFolder}/client",
       "sourceMaps": true
     }
   ]
