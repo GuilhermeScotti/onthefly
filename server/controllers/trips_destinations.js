@@ -40,7 +40,18 @@ const getAllDestinations = async (req, res) => {
       [trip_id],
     );
 
-    res.status(200).json(results.rows); // Return all destinations for the specific trip
+    if (results.rows.length === 0) {
+      return []; // Return an empty array if no destinations were found
+    }
+
+    const destinationIds = results.rows.map((row) => row.destination_id);
+
+    const destinations = await pool.query(
+      `SELECT * FROM destinations WHERE id = ANY($1::int[])`,
+      [destinationIds],
+    );
+
+    return res.status(200).json(destinations.rows); // Return all destinations for the specific trip
   } catch (error) {
     res.status(409).json({ error: error.message });
   }
