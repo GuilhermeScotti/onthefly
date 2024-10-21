@@ -66,6 +66,18 @@ const App = () => {
       path: "/destinations/add/:destination_id",
       element: <AddToTrip data={trips} />,
     },
+    {
+      path: "*",
+      element: (
+        <div>
+          Not Found
+          <p />
+          <button onClick={() => (window.location.href = "/")}>
+            Go to Home
+          </button>
+        </div>
+      ), // Catch-all 404 page
+    },
   ]);
 
   return (

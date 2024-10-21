@@ -1,49 +1,64 @@
-
 .flex-container {
-    display: flex;
-    flex-wrap: nowrap;
-    
+  display: flex;
+  flex-wrap: nowrap;
+}
 
-  }
-  
-  .flex-container > div {
-    background-color: #f1f1f1;
-    width: 50%;
-    margin: 10px;
-    text-align: center;
-    line-height: 75px;
-    font-size: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
+.flex-container > div {
+  background-color: #f1f1f1;
+  width: 50%;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
 
+.flex-container p {
+  font-size: 20px;
+  line-height: 30px;
+  text-align: justify;
+}
 
-  .flex-container p {
-    font-size: 20px;
-    line-height: 30px;
-    text-align: justify;
-  }
+.right-side {
+  background-size: cover;
+}
 
-  .right-side {
-    background-size: cover;
-  }
+.addActivityBtn {
+  color: rgb(255, 255, 255);
+  background-color: rgba(38, 163, 217, 0.491);
+}
 
-  .addActivityBtn{
-    color: rgb(255, 255, 255);
-    background-color: rgba(38, 163, 217, 0.491);
-  }
+.addActivityBtn:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgba(29, 122, 162, 0.491);
+}
 
-  .addActivityBtn:hover{
-    color: rgb(255, 255, 255);
-    background-color: rgba(29, 122, 162, 0.491);
-  }
+.addDestinationBtn {
+  color: rgb(255, 255, 255);
+  background-color: rgba(38, 163, 217, 0.491);
+}
 
-  .addDestinationBtn{
-    color: rgb(255, 255, 255);
-    background-color: rgba(38, 163, 217, 0.491);
-  }
+.addDestinationBtn:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgba(29, 122, 162, 0.491);
+}
 
-  .addDestinationBtn:hover{
-    color: rgb(255, 255, 255);
-    background-color: rgba(29, 122, 162, 0.491);
-  }
+.comments-section {
+  background-color: #f9f9f9; /* Light background for contrast */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px; /* Spacing inside the container */
+  margin: 20px 0; /* Space around the comments section */
+  max-width: 800px; /* Limit the width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.comment {
+  background-color: #ffffff; /* White background for each comment */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 5px; /* Rounded corners for comments */
+  padding: 15px; /* Padding inside each comment */
+  margin-bottom: 15px; /* Space between comments */
+}

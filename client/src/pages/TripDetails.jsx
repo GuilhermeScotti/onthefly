@@ -18,9 +18,30 @@ const TripDetails = ({ data }) => {
   });
   const [activities, setActivities] = useState([]);
   const [destinations, setDestinations] = useState([]);
+  const [commentText, setCommentText] = useState("");
+  const [mediaFile, setMediaFile] = useState("");
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      comment: "Of green nothing tonight season later if option.",
+      mediaUrl:
+        "https://images.pexels.com/photos/2570063/pexels-photo-2570063.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    },
+    {
+      id: 2,
+      comment: "Authority big door language billion group federal.",
+      mediaUrl:
+        "https://cdn.pixabay.com/video/2020/08/14/47179-450995679_large.mp4",
+    },
+  ]);
 
   useEffect(() => {
     const result = data.filter((item) => item.id === parseInt(id))[0];
+
+    if (!data || !result) {
+      return;
+    }
+
     setPost({
       id: parseInt(result.id),
       title: result.title,
@@ -50,6 +71,23 @@ const TripDetails = ({ data }) => {
     fetchDestinations();
   }, [data, id]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newId = comments.length + 1;
+    const updatedComment = {
+      id: newId,
+      comment: commentText,
+      mediaUrl: mediaFile,
+    };
+    // Update the comments state
+    setComments((prevComments) => [...prevComments, updatedComment]);
+
+    // Clear the input fields after submission
+    setCommentText("");
+    setMediaFile("");
+  };
+
   return (
     <div className="out">
       <div className="flex-container">
@@ -72,6 +110,7 @@ const TripDetails = ({ data }) => {
           {activities && activities.length > 0
             ? activities.map((activity, index) => (
                 <ActivityBtn
+                  key={activity.id}
                   id={activity.id}
                   activity={activity.activity}
                   num_votes={activity.num_votes}
@@ -87,6 +126,7 @@ const TripDetails = ({ data }) => {
           {destinations && destinations.length > 0
             ? destinations.map((destination, index) => (
                 <DestinationBtn
+                  key={destination.id}
                   id={destination.id}
                   destination={destination.destination}
                 />
@@ -97,6 +137,68 @@ const TripDetails = ({ data }) => {
             <button className="addDestinationBtn">+ Add Destination</button>
           </Link>
         </div>
+
+        <div>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="comment">Add a comment:</label>
+              <textarea
+                id="comment"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="Write your comment..."
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="media">Upload a photo or video:</label>
+              <input
+                type="text"
+                id="mediaFile"
+                value={mediaFile}
+                onChange={(e) => setMediaFile(e.target.value)}
+                placeholder="Enter image or video URL"
+              />
+              {mediaFile && (
+                <div>
+                  <h3>Preview:</h3>
+                  {mediaFile.match(/\.(jpeg|jpg|gif|png)$/) ? (
+                    <img src={mediaFile} alt="Preview" width="400" />
+                  ) : (
+                    <video src={mediaFile} controls width="400" />
+                  )}
+                </div>
+              )}
+            </div>
+
+            <button type="submit" className="addActivityBtn">
+              Submit Comment
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="comments-section">
+        <h4>Comments</h4>
+        {comments &&
+          comments.map((comment) => (
+            <div key={comment.id} className="comment">
+              <p>{comment.comment}</p>
+              {comment.mediaUrl && (
+                <div>
+                  {comment.mediaUrl.includes("video") ? (
+                    <video src={comment.mediaUrl} controls width="400" />
+                  ) : (
+                    <img
+                      src={comment.mediaUrl}
+                      alt="Comment media"
+                      width="400"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
       </div>
     </div>
   );
