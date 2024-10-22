@@ -3,10 +3,13 @@ import Card from "../components/Card";
 
 const ReadTrips = (props) => {
   const [trips, setTrips] = useState([]);
+  const [tripsStorage, setTripsStorage] = useState([]);
   const [destinations, setDestinations] = useState([]);
   const [selectedDestination, setSelectedDestination] = useState("");
+  const [maxDays, setMaxDays] = useState();
 
   useEffect(() => {
+    setTripsStorage(props.data);
     setTrips(props.data);
     setDestinations(props.destinations);
   }, [props]);
@@ -23,6 +26,7 @@ const ReadTrips = (props) => {
         );
         const tripsData = await response.json();
         console.log("Selected destination details:", tripsData);
+        setTripsStorage(tripsData);
         setTrips(tripsData);
       } catch (error) {
         console.error("Error fetching destination details:", error);
@@ -30,31 +34,74 @@ const ReadTrips = (props) => {
     } else {
       const response = await fetch("/api/trips");
       const data = await response.json();
+      setTripsStorage(data);
       setTrips(data);
+    }
+  };
+
+  const handleBudgetChange = async (e) => {
+    const days = e.target.value;
+    setMaxDays(days);
+
+    // Filter destinations based on max budget
+    if (days) {
+      const num = parseInt(days);
+      const filtered = tripsStorage.filter((trip) => trip.num_days <= num);
+      setTrips(filtered);
+    } else {
+      if (selectedDestination) {
+        try {
+          const response = await fetch(
+            `/api/trips_destinations/trips/${selectedDestination}`
+          );
+          const tripsData = await response.json();
+          console.log("Selected destination details:", tripsData);
+          setTripsStorage(tripsData);
+          setTrips(tripsData);
+        } catch (error) {
+          console.error("Error fetching destination details:", error);
+        }
+      } else {
+        const response = await fetch("/api/trips");
+        const data = await response.json();
+        setTripsStorage(data);
+        setTrips(data);
+      }
     }
   };
 
   return (
     <div className="ReadTrips">
-      {destinations && destinations.length > 0 ? (
-        <div>
-          <label htmlFor="destinationSelect">Choose a Destination: </label>
-          <select id="destinationSelect" onChange={handleSelectChange}>
-            <option value="">Select a destination</option>
-            {destinations.map((destination) => (
-              <option key={destination.id} value={destination.id}>
-                {destination.destination}
-              </option>
-            ))}
-          </select>
+      <div>
+        {destinations && destinations.length > 0 ? (
+          <div>
+            <label htmlFor="destinationSelect">Choose a Destination: </label>
+            <select id="destinationSelect" onChange={handleSelectChange}>
+              <option value="">Select a destination</option>
+              {destinations.map((destination) => (
+                <option key={destination.id} value={destination.id}>
+                  {destination.destination}
+                </option>
+              ))}
+            </select>
 
-          {selectedDestination && (
-            <p>Selected Destination ID: {selectedDestination}</p>
-          )}
+            {selectedDestination && (
+              <p>Selected Destination ID: {selectedDestination}</p>
+            )}
+          </div>
+        ) : (
+          <h4>No selected</h4>
+        )}
+        <div>
+          <input
+            type=""
+            id="maxBudget"
+            value={maxDays}
+            onChange={handleBudgetChange}
+            placeholder="Max Budget"
+          />
         </div>
-      ) : (
-        <h4>No selected</h4>
-      )}
+      </div>
       {trips && trips.length > 0 ? (
         trips.map((post, index) => (
           <Card
