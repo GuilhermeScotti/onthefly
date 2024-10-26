@@ -3,6 +3,7 @@ import cors from "cors";
 import passport from "passport";
 import session from "express-session";
 import { GitHub } from "./config/auth.js";
+import pool from "./config/database.js";
 import authRoutes from "./routes/auth.js";
 import tripRoutes from "./routes/trips.js";
 import activitiesRoutes from "./routes/activities.js";
@@ -33,6 +34,23 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(GitHub);
+
+passport.serializeUser((user, done) => {
+  done(null, user.githubid);
+});
+
+passport.deserializeUser((githubid, done) => {
+  pool.query(
+    "SELECT * FROM users WHERE githubid = $1",
+    [githubid],
+    (err, results) => {
+      if (err) {
+        return done(err);
+      }
+      return done(null, results.rows[0]);
+    },
+  );
+});
 
 app.get("/", (req, res) => {
   res

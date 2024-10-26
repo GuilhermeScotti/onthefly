@@ -9,12 +9,12 @@ const options = {
 
 const verify = async (accessToken, refreshToken, profile, callback) => {
   const {
-    _json: { id, name, login, avatar_url },
+    _json: { id, login, avatar_url },
   } = profile;
 
   const userData = {
     githubid: id,
-    username: name,
+    username: login,
     avatarurl: avatar_url,
     accessToken,
   };
@@ -31,7 +31,12 @@ const verify = async (accessToken, refreshToken, profile, callback) => {
         `INSERT INTO users (githubid, username, avatarurl, accesstoken)
         VALUES($1, $2, $3, $4)
         RETURNING *`,
-        [userData.githubId, userData.username, userData.avatarUrl, accessToken],
+        [
+          userData.githubid,
+          userData.username,
+          userData.avatarurl,
+          userData.accessToken,
+        ],
       );
 
       const newUser = results.rows[0];

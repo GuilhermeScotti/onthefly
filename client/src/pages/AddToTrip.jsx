@@ -18,6 +18,7 @@ const AddToTrip = (props) => {
             title={trip.title}
             description={trip.description}
             img_url={trip.img_url}
+            api_url={props.api_url}
           />
         ))
       ) : (

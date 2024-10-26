@@ -3,6 +3,7 @@ import "./ActivityBtn.css";
 
 const ActivityBtn = (props) => {
   const [num_votes, setNumVotes] = useState(props.num_votes);
+  const { api_url } = props;
 
   const updateCount = async () => {
     const options = {
@@ -15,7 +16,10 @@ const ActivityBtn = (props) => {
     };
 
     try {
-      const response = await fetch("/api/activities/" + props.id, options);
+      const response = await fetch(
+        `${api_url}/api/activities/` + props.id,
+        options
+      );
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);

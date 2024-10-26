@@ -4,6 +4,7 @@ import "./Card.css";
 
 const AddTripOptionCard = (props) => {
   const { destination_id } = useParams();
+  const { api_url } = props;
 
   const addToTrip = async (event) => {
     event.preventDefault();
@@ -20,7 +21,10 @@ const AddTripOptionCard = (props) => {
     };
 
     try {
-      const response = await fetch("/api/trips_destinations", options);
+      const response = await fetch(
+        `${api_url}/api/trips_destinations`,
+        options
+      );
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);

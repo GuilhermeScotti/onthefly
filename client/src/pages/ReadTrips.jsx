@@ -8,6 +8,8 @@ const ReadTrips = (props) => {
   const [selectedDestination, setSelectedDestination] = useState("");
   const [maxDays, setMaxDays] = useState();
 
+  const { api_url } = props;
+
   useEffect(() => {
     setTripsStorage(props.data);
     setTrips(props.data);
@@ -22,7 +24,7 @@ const ReadTrips = (props) => {
     if (selectedId) {
       try {
         const response = await fetch(
-          `/api/trips_destinations/trips/${selectedId}`
+          `${api_url}/api/trips_destinations/trips/${selectedId}`
         );
         const tripsData = await response.json();
         console.log("Selected destination details:", tripsData);
@@ -32,7 +34,7 @@ const ReadTrips = (props) => {
         console.error("Error fetching destination details:", error);
       }
     } else {
-      const response = await fetch("/api/trips");
+      const response = await fetch(`${api_url}/api/trips`);
       const data = await response.json();
       setTripsStorage(data);
       setTrips(data);
@@ -52,7 +54,7 @@ const ReadTrips = (props) => {
       if (selectedDestination) {
         try {
           const response = await fetch(
-            `/api/trips_destinations/trips/${selectedDestination}`
+            `${api_url}/api/trips_destinations/trips/${selectedDestination}`
           );
           const tripsData = await response.json();
           console.log("Selected destination details:", tripsData);
@@ -62,7 +64,7 @@ const ReadTrips = (props) => {
           console.error("Error fetching destination details:", error);
         }
       } else {
-        const response = await fetch("/api/trips");
+        const response = await fetch(`${api_url}/api/trips`);
         const data = await response.json();
         setTripsStorage(data);
         setTrips(data);

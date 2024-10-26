@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./CreateDestination.css";
 
-const CreateDestination = () => {
+const CreateDestination = ({ api_url }) => {
   const [destination, setDestination] = useState({
     destination: "",
     description: "",
@@ -36,7 +36,7 @@ const CreateDestination = () => {
       };
 
       try {
-        const response = await fetch("/api/destinations", options);
+        const response = await fetch(`${api_url}/api/destinations`, options);
 
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
@@ -64,7 +64,10 @@ const CreateDestination = () => {
       };
 
       try {
-        const response = await fetch("/api/trips_destinations", options);
+        const response = await fetch(
+          `${api_url}/api/trips_destinations`,
+          options
+        );
 
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);

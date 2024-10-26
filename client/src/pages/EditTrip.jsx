@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./EditTrip.css";
 
-const EditTrip = ({ data }) => {
+const EditTrip = ({ data, api_url }) => {
   const { id } = useParams();
   const [post, setPost] = useState({
     id: 0,
@@ -51,7 +51,7 @@ const EditTrip = ({ data }) => {
     };
 
     try {
-      const response = await fetch(`/api/trips/${id}`, options);
+      const response = await fetch(`${api_url}/api/trips/${id}`, options);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
@@ -74,7 +74,7 @@ const EditTrip = ({ data }) => {
     };
 
     try {
-      const response = await fetch(`/api/trips/${id}`, options);
+      const response = await fetch(`${api_url}/api/trips/${id}`, options);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);

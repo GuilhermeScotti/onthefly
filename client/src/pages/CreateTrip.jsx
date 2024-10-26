@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CreateTrip.css";
 
-const CreateTrip = () => {
+const CreateTrip = ({ api_url }) => {
   const [post, setPost] = useState({
     id: 0,
     title: "",
@@ -35,7 +35,7 @@ const CreateTrip = () => {
     };
 
     try {
-      const response = await fetch("/api/trips", options);
+      const response = await fetch(`${api_url}/api/trips`, options);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
