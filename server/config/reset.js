@@ -125,24 +125,24 @@ async function createTripsDestinationsTable() {
   }
 }
 
-async function createUsersTable() {
-  const createUsersTableQuery = `
-    CREATE TABLE IF NOT EXISTS users (
-      id serial PRIMARY KEY,
-      githubid INTEGER NOT NULL,
-      username VARCHAR(100) NOT NULL,
-      avatarurl VARCHAR(500) NOT NULL,
-      accesstoken VARCHAR(500) NOT NULL
-    );
-  `;
+// async function createUsersTable() {
+//   const createUsersTableQuery = `
+//     CREATE TABLE IF NOT EXISTS users (
+//       id serial PRIMARY KEY,
+//       githubid INTEGER NOT NULL,
+//       username VARCHAR(100) NOT NULL,
+//       avatarurl VARCHAR(500) NOT NULL,
+//       accesstoken VARCHAR(500) NOT NULL
+//     );
+//   `;
 
-  try {
-    await pool.query(createUsersTableQuery);
-    console.log("users table created");
-  } catch (error) {
-    console.error("error creating users table", error);
-  }
-}
+//   try {
+//     await pool.query(createUsersTableQuery);
+//     console.log("users table created");
+//   } catch (error) {
+//     console.error("error creating users table", error);
+//   }
+// }
 
 async function createTripUsersTable() {
   const tripUsersCreateQuery = `
@@ -169,7 +169,7 @@ async function serializeCreateTables() {
   await createDestinationsTable();
   await createActivitiesTable();
   await createTripsDestinationsTable();
-  await createUsersTable();
+  // await createUsersTable();
   await createTripUsersTable();
 }
 
