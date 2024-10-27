@@ -16,6 +16,7 @@ const TripDetails = ({ data, api_url }) => {
     end_date: "",
     total_cost: 0.0,
   });
+  const [travelers, setTravelers] = useState([]);
   const [activities, setActivities] = useState([]);
   const [destinations, setDestinations] = useState([]);
   const [commentText, setCommentText] = useState("");
@@ -34,6 +35,15 @@ const TripDetails = ({ data, api_url }) => {
         "https://cdn.pixabay.com/video/2020/08/14/47179-450995679_large.mp4",
     },
   ]);
+
+  useEffect(() => {
+    const fetchTravelers = async () => {
+      const response = await fetch(`${api_url}/api/users-trips/users/` + id);
+      const travelersData = await response.json();
+      setTravelers(travelersData);
+    };
+    fetchTravelers();
+  }, [id]);
 
   useEffect(() => {
     const result = data.filter((item) => item.id === parseInt(id))[0];
@@ -55,16 +65,16 @@ const TripDetails = ({ data, api_url }) => {
 
     const fetchActivities = async () => {
       const response = await fetch(`${api_url}/api/activities/` + id);
-      const data = await response.json();
-      setActivities(data);
+      const actsData = await response.json();
+      setActivities(actsData);
     };
 
     const fetchDestinations = async () => {
       const response = await fetch(
         `${api_url}/api/trips_destinations/destinations/` + id
       );
-      const data = await response.json();
-      setDestinations(data);
+      const destData = await response.json();
+      setDestinations(destData);
     };
 
     fetchActivities();
@@ -103,6 +113,24 @@ const TripDetails = ({ data, api_url }) => {
           className="right-side"
           style={{ backgroundImage: `url(${post.img_url})` }}
         ></div>
+
+        <div className="travelers">
+          {travelers && travelers.length > 0
+            ? travelers.map((traveler, index) => (
+                <p
+                  key={index}
+                  style={{ textAlign: "center", lineHeight: 0, paddingTop: 20 }}
+                >
+                  {traveler.username}
+                </p>
+              ))
+            : ""}
+
+          <br />
+          <Link to={"/users/add/" + id}>
+            <button className="addActivityBtn">+ Add Traveler</button>
+          </Link>
+        </div>
       </div>
 
       <div className="flex-container">

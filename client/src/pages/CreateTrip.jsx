@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CreateTrip.css";
 
-const CreateTrip = ({ api_url }) => {
+const CreateTrip = ({ api_url, user }) => {
   const [post, setPost] = useState({
     id: 0,
     title: "",
@@ -11,6 +11,7 @@ const CreateTrip = ({ api_url }) => {
     start_date: "",
     end_date: "",
     total_cost: 0.0,
+    username: user.username,
   });
 
   const handleChange = (event) => {
@@ -56,6 +57,16 @@ const CreateTrip = ({ api_url }) => {
         <h3> Create New Trip</h3>
       </center>
       <form>
+        <label>User</label> <br />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={post.username}
+          readOnly
+        />
+        <br />
+        <br />
         <label>Title</label> <br />
         <input
           type="text"

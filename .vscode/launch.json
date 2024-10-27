@@ -14,7 +14,18 @@
     {
       "type": "chrome",
       "request": "launch",
+      "name": "Launch to Chrome",
+      "url": "http://localhost:5173/",
+      "webRoot": "${workspaceFolder}/client",
+      "sourceMaps": true
+    },
+
+    //On macOS launch chrome via: /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+    {
+      "type": "chrome",
+      "request": "attach",
       "name": "Attach to Chrome",
+      "port": 9222,
       "url": "http://localhost:5173/",
       "webRoot": "${workspaceFolder}/client",
       "sourceMaps": true

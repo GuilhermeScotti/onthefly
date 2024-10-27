@@ -36,7 +36,7 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    successRedirect: "/",
+    successRedirect: "http://localhost:5173/",
     failureRedirect: "/destinations",
   }),
 );

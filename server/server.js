@@ -67,7 +67,7 @@ app.use("/api/destinations", destinationsRoutes);
 app.use("/api/trips_destinations", tripsDestinationsRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/trips_users", tripsUsersRoutes);
-app.use("/api//users-trips", userTripsRoutes);
+app.use("/api/users-trips", userTripsRoutes);
 
 const PORT = process.env.PORT || 3001;
 

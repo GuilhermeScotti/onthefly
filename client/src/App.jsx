@@ -12,6 +12,7 @@ import CreateActivity from "./pages/CreateActivity";
 import AddToTrip from "./pages/AddToTrip";
 import Login from "./pages/Login";
 import Avatar from "./components/Avatar";
+import AddUserToTrip from "./pages/AddUserToTrip";
 
 const API_URL = "http://localhost:3001";
 
@@ -50,7 +51,7 @@ const App = () => {
     const url = `${API_URL}/auth/logout`;
     const response = await fetch(url, { credentials: "include" });
     const json = await response.json();
-    window.location.href = "/";
+    window.location.href = "/logged-out";
   };
 
   // Sets up routes
@@ -72,7 +73,7 @@ const App = () => {
       path: "/trip/new",
       element:
         user && user.id ? (
-          <CreateTrip api_url={API_URL} />
+          <CreateTrip api_url={API_URL} user={user} />
         ) : (
           <Login api_url={API_URL} />
         ),
@@ -130,6 +131,24 @@ const App = () => {
         ) : (
           <Login api_url={API_URL} />
         ),
+    },
+    {
+      path: "/users/add/:trip_id",
+      element:
+        user && user.id ? (
+          <AddUserToTrip user={user} api_url={API_URL} />
+        ) : (
+          <Login api_url={API_URL} />
+        ),
+    },
+    {
+      path: "/logged-out",
+      element: (
+        <div>
+          Logged Out!
+          <Login api_url={API_URL} />
+        </div>
+      ), // Catch-all 404 page
     },
     {
       path: "*",
