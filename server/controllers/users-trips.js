@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS users (
     githubid int NOT NULL,
     username varchar(200) NOT NULL,
     avatarurl varchar(500),
-    accesstoken varchar(500) NOT NULL
+    accesstoken varchar(500) NOT NULL,
+    bio VARCHAR(500)
 );`;
 
 const createUsersTripsTableQuery = `

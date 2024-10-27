@@ -13,6 +13,7 @@ import AddToTrip from "./pages/AddToTrip";
 import Login from "./pages/Login";
 import Avatar from "./components/Avatar";
 import AddUserToTrip from "./pages/AddUserToTrip";
+import User from "./pages/User";
 
 const API_URL = "http://localhost:3001";
 
@@ -20,6 +21,7 @@ const App = () => {
   const [trips, setTrips] = useState([]);
   const [destinations, setDestinations] = useState([]);
   const [user, setUser] = useState({});
+  const [userTrips, setUserTrips] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -27,7 +29,13 @@ const App = () => {
         credentials: "include",
       });
       const json = await response.json();
+
+      const response2 = await fetch(
+        `${API_URL}/api/users-trips/trips/${user.username}`
+      );
+      const userTripsData = await response2.json();
       setUser(json.user);
+      setUserTrips(userTripsData);
     };
 
     const fetchTrips = async () => {
@@ -45,7 +53,7 @@ const App = () => {
     getUser();
     fetchTrips();
     fetchDestinations();
-  }, []);
+  }, [user.username]);
 
   const logout = async () => {
     const url = `${API_URL}/auth/logout`;
@@ -64,6 +72,7 @@ const App = () => {
             data={trips}
             destinations={destinations}
             api_url={API_URL}
+            userTrips={userTrips}
           />
         ) : (
           <Login api_url={API_URL} />
@@ -100,7 +109,7 @@ const App = () => {
       path: "/trip/get/:id",
       element:
         user && user.id ? (
-          <TripDetails data={trips} api_url={API_URL} />
+          <TripDetails data={trips} api_url={API_URL} user={user} />
         ) : (
           <Login api_url={API_URL} />
         ),
@@ -151,6 +160,15 @@ const App = () => {
       ), // Catch-all 404 page
     },
     {
+      path: "/user/:user_id",
+      element:
+        user && user.id ? (
+          <User api_url={API_URL} userTrips={userTrips} user={user} />
+        ) : (
+          <Login api_url={API_URL} />
+        ),
+    },
+    {
       path: "*",
       element: (
         <div>
@@ -168,20 +186,22 @@ const App = () => {
     <div className="App">
       {user && user.id ? (
         <div className="header">
-          <h1>On The Fly ✈️</h1>
-          <Link to="/">
-            <button className="headerBtn">Explore Trips</button>
-          </Link>
-          <Link to="/destinations">
-            <button className="headerBtn">Explore Destinations</button>
-          </Link>
-          <Link to="/trip/new">
-            <button className="headerBtn"> + Add Trip </button>
-          </Link>
-          <button onClick={logout} className="headerBtn">
-            Logout
-          </button>
-          <Avatar className="avatar" user={user} />
+          <div className="header">
+            <h1>On The Fly ✈️</h1>
+            <Link to="/">
+              <button className="headerBtn">Explore Trips</button>
+            </Link>
+            <Link to="/destinations">
+              <button className="headerBtn">Explore Destinations</button>
+            </Link>
+            <Link to="/trip/new">
+              <button className="headerBtn"> + Add Trip </button>
+            </Link>
+            <button onClick={logout} className="headerBtn">
+              Logout
+            </button>
+            <Avatar className="avatar" user={user} />
+          </div>
         </div>
       ) : (
         <></>

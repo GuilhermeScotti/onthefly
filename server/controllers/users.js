@@ -18,6 +18,22 @@ const createUser = async (req, res) => {
   }
 };
 
+const createUserBio = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { bio } = req.body;
+
+    const results = await pool.query(
+      `UPDATE users SET bio = $1 WHERE id = $2 RETURNING *`,
+      [bio, id],
+    );
+
+    res.status(200).json(results.rows[0]);
+  } catch (error) {
+    res.status(409).json({ error: error.message });
+  }
+};
+
 // Retrieve all users
 const getUsers = async (req, res) => {
   try {
@@ -89,6 +105,7 @@ const deleteUser = async (req, res) => {
 
 export default {
   createUser,
+  createUserBio,
   getUsers,
   getUser,
   updateUser,

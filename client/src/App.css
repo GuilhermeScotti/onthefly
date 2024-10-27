@@ -9,7 +9,7 @@
   background-color: #97bfd8a3;
   background-position: right center;
   background-size: cover;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -29,8 +29,16 @@
   text-align: center;
 }
 
+.dash {
+  width: 100%;
+  color: #373d3f;
+  text-align: center;
+  justify-items: center;
+  align-content: center;
+}
+
 .headerBtn {
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   margin-right: 10px;
 }
 

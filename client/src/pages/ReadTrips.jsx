@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
+import TripsDashboard from "../components/TripsDashboard";
 
 const ReadTrips = (props) => {
   const [trips, setTrips] = useState([]);
@@ -8,7 +9,7 @@ const ReadTrips = (props) => {
   const [selectedDestination, setSelectedDestination] = useState("");
   const [maxDays, setMaxDays] = useState();
 
-  const { api_url } = props;
+  const { api_url, userTrips } = props;
 
   useEffect(() => {
     setTripsStorage(props.data);
@@ -74,6 +75,9 @@ const ReadTrips = (props) => {
 
   return (
     <div className="ReadTrips">
+      <div className="dash">
+        <TripsDashboard userTrips={userTrips} />
+      </div>
       <div>
         {destinations && destinations.length > 0 ? (
           <div>

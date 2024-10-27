@@ -4,6 +4,7 @@ import UsersController from "../controllers/users.js";
 const router = express.Router();
 
 router.get("/", UsersController.getUsers);
+router.post("/bio/:id", UsersController.createUserBio);
 router.get("/:id", UsersController.getUser);
 router.post("/", UsersController.createUser);
 router.delete("/:id", UsersController.deleteUser);

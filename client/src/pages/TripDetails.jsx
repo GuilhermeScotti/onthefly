@@ -4,7 +4,7 @@ import ActivityBtn from "../components/ActivityBtn";
 import DestinationBtn from "../components/DestinationBtn";
 import "./TripDetails.css";
 
-const TripDetails = ({ data, api_url }) => {
+const TripDetails = ({ data, api_url, user }) => {
   const { id } = useParams();
   const [post, setPost] = useState({
     id: 0,
@@ -98,7 +98,8 @@ const TripDetails = ({ data, api_url }) => {
     setMediaFile("");
   };
 
-  return (
+  return travelers &&
+    travelers.some((traveler) => traveler.username === user.username) ? (
     <div className="out">
       <div className="flex-container">
         <div className="left-side">
@@ -230,6 +231,8 @@ const TripDetails = ({ data, api_url }) => {
           ))}
       </div>
     </div>
+  ) : (
+    <div>You are not a traveler of this trip</div>
   );
 };
 
