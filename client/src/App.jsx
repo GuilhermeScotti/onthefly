@@ -63,6 +63,7 @@ const App = () => {
     const url = `${API_URL}/auth/logout`;
     const response = await fetch(url, { credentials: "include" });
     const json = await response.json();
+    setUser({});
   };
 
   // Sets up routes
