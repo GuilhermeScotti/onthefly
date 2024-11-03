@@ -15,7 +15,11 @@ import Avatar from "./components/Avatar";
 import AddUserToTrip from "./pages/AddUserToTrip";
 import User from "./pages/User";
 
-const API_URL = "http://localhost:3001";
+//onthefly-production-a287.up.railway.app
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://onthefly-production-a287.up.railway.app"
+    : "";
 
 const App = () => {
   const [trips, setTrips] = useState([]);
