@@ -19,7 +19,7 @@ import User from "./pages/User";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? "https://onthefly-production-a287.up.railway.app"
-    : "";
+    : "https://onthefly-production-a287.up.railway.app";
 
 const App = () => {
   const [trips, setTrips] = useState([]);
@@ -63,7 +63,6 @@ const App = () => {
     const url = `${API_URL}/auth/logout`;
     const response = await fetch(url, { credentials: "include" });
     const json = await response.json();
-    window.location.href = "/logged-out";
   };
 
   // Sets up routes
@@ -201,9 +200,11 @@ const App = () => {
             <Link to="/trip/new">
               <button className="headerBtn"> + Add Trip </button>
             </Link>
-            <button onClick={logout} className="headerBtn">
-              Logout
-            </button>
+            <Link to="/logged-out">
+              <button onClick={logout} className="headerBtn">
+                Logout
+              </button>
+            </Link>
             <Avatar className="avatar" user={user} />
           </div>
         </div>
