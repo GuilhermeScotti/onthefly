@@ -36,8 +36,8 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    successRedirect: "http://localhost:5173/",
-    failureRedirect: "/destinations",
+    successRedirect: "https://onthefly-client-production.up.railway.app/",
+    failureRedirect: "https://onthefly-client-production.up.railway.app/",
   }),
 );
 
